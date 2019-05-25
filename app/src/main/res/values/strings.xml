@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">AndroidSample</string>
+    <string name="get_location">Get Location</string>
+    <string name="weather">Weather</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="temperature_default">100℃</string>
+    <string name="humidity_default">100％</string>
+    <string name="time_default">0000/00/00 00:00:00</string>
+    <string name="save">Save</string>
+    <string name="title_memo">MEMO</string>
+    <string name="description_api">Fetch Weather data button</string>
+    <string name="title_weather">WEATHER DATA</string>
+    <string name="stamp">Stamp</string>
+    <string name="gpstime">GpsTime</string>
+    <string name="speed">Speed</string>
+    <string name="altitude">Altitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="description_gps">Update GPS button</string>
+    <string name="title_gps">GPS DATA</string>
+    <string name="memo_title">memo title</string>
+    <string name="memo_main">memo main sentence</string>
+    <string name="title">title</string>
+    <string name="main">main</string>
+    <string name="description_memo_title">Memo title</string>
+    <string name="description_memo_main">memo main sentence</string>
+    <string name="memo_title_hint">タイトルを入力してください（20文字）</string>
+    <string name="memo_main_hint">本文を入力してください（200文字）</string>
+</resources>
