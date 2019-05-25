@@ -27,4 +27,17 @@
     <string name="description_memo_main">memo main sentence</string>
     <string name="memo_title_hint">タイトルを入力してください（20文字）</string>
     <string name="memo_main_hint">本文を入力してください（200文字）</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="phone_image">Phone Image</string>
+    <string name="x_axis">x-axis:</string>
+    <string name="y_axis">y-axis:</string>
+    <string name="z_axis">z-axis:</string>
+    <string name="acc_unit">[m/s^2]</string>
+    <string name="mag_unit">[uT]</string>
+    <string name="sensor_data">SensorData</string>
+    <string name="get_sensor_button">Get sensor data</string>
+    <string name="transaction_sensor">Go to Sensor page</string>
+    <string name="title_sensor_data">SENSOR DATA</string>
+    <string name="delete_sensor_button">Delete sensor data</string>
 </resources>

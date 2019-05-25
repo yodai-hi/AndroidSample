@@ -3,34 +3,38 @@ package jp.naist.ubi_lab.androidsample.view.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.text.format.DateFormat
 import android.util.Log
-import jp.naist.ubi_lab.androidsample.utils.LocationManager
+import jp.naist.ubi_lab.androidsample.repository.LocationManager
 import jp.naist.ubi_lab.androidsample.viewmodel.WeatherViewAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import org.json.JSONException
 import org.json.JSONObject
 import okhttp3.*
 import jp.naist.ubi_lab.androidsample.model.WeatherData
 import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import jp.naist.ubi_lab.androidsample.model.MemoData
 import jp.naist.ubi_lab.androidsample.R
+import jp.naist.ubi_lab.androidsample.view.fragment.SensorFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() , SensorFragment.MyListener{
+    override fun onClickButton() {
+    }
 
     private val tag = "MainActivity"
     private val REQUEST_PERMISSION_COARSE_LOCATION = 101
-    private var locationManager: LocationManager = LocationManager(this)
+    private var locationManager: LocationManager =
+        LocationManager(this)
     private var locationLAT = 0.0
     private var locationLNG = 0.0
     private var res = ""
@@ -64,6 +68,13 @@ class MainActivity : Activity() {
         }
         save_button.setOnClickListener {
             saveMemo()
+        }
+        sensor_fragment_button.setOnClickListener {
+            val fragmentManager = supportFragmentManager
+            val fragment = SensorFragment()
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fragment)
+            transaction.commit()
         }
     }
 

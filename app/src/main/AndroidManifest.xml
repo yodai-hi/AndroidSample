@@ -13,10 +13,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:icon="@mipmap/android_sample_icon">
-        <activity android:name="jp.naist.ubi_lab.androidsample.view.activity.HistoryActivity"
-        android:parentActivityName=".view.activity.MainActivity">
+        <activity
+                android:name="jp.naist.ubi_lab.androidsample.view.activity.HistoryActivity"
+                android:parentActivityName=".view.activity.MainActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name="jp.naist.ubi_lab.androidsample.view.activity.MainActivity">
+        <activity
+                android:name="jp.naist.ubi_lab.androidsample.view.activity.MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

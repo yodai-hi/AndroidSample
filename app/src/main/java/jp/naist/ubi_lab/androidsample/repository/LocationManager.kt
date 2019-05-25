@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.utils
+package jp.naist.ubi_lab.androidsample.repository
 
 import android.Manifest
 import android.content.Context
