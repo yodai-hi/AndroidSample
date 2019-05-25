@@ -20,10 +20,10 @@ import jp.naist.ubi_lab.androidsample.view.activity.MainActivity
 
 
 class LocationManager(context: Context) {
+    //デバッグ用のタグ
     private val tag = "LocationManager"
-
-    private var locationEventListener: GpsLocationEventListener =
-        GpsLocationEventListener(context)
+    //インスタンスを作製
+    private var locationEventListener: GpsLocationEventListener = GpsLocationEventListener(context)
 
 
     fun start() {
@@ -41,16 +41,14 @@ class LocationManager(context: Context) {
         return locationEventListener.getSensorData()
     }
 
-
+    //インナークラス．カプセル化（隠蔽）の手段
     class GpsLocationEventListener(private val context: Context){
-
+        //インナークラスのフィールドは外部クラストは完全に切り離されている
         private val tag: String = "LocationEventListener"
-
         private var isReconnectRequired = false
         private var isStarted = false
         // Fused Location Provider API.
         private var fusedLocationClient: FusedLocationProviderClient? = null
-
         // Location Settings APIs.
         private var settingsClient: SettingsClient? = null
         private var locationSettingsRequest: LocationSettingsRequest? = null
@@ -61,30 +59,35 @@ class LocationManager(context: Context) {
         private var requestingLocationUpdates: Boolean? = null
         private var priority = 1
 
-
+        //初期化処理
         fun connect() {
+            //LocationServiceに関わるクライアント
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             settingsClient = LocationServices.getSettingsClient(context)
+            //後に定義．リクエストの精度
             priority = 1
 
+            //コールバックの変数をフィールドに代入
             createLocationCallback()
+            //取得の詳細を設定
             createLocationRequest()
             buildLocationSettingsRequest()
 
             startLocationUpdates()
         }
 
+        //終了処理
         fun disconnect() {
             stopLocationUpdates()
             if (isStarted) {
-                Log.e(tag,"----:::google_api_client_DISCONNECT")
+                Log.e(tag,"----:google_api_client_DISCONNECT")
 
                 isStarted = false
                 isReconnectRequired = false
             }
         }
 
-        // locationのコールバックを受け取る
+        //locationのコールバックを受け取る
         private fun createLocationCallback() {
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
@@ -95,6 +98,7 @@ class LocationManager(context: Context) {
             }
         }
 
+        //精度，最短インターバルを設定
         private fun createLocationRequest() {
             when (priority) {
                 0 -> locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -102,22 +106,20 @@ class LocationManager(context: Context) {
                 2 -> locationRequest.priority = LocationRequest.PRIORITY_LOW_POWER
                 else -> locationRequest.priority = LocationRequest.PRIORITY_NO_POWER
             }
-
             locationRequest.interval = 1000
-//            locationRequest.fastestInterval = 600
+            locationRequest.fastestInterval = 600
         }
 
-
+        //設定を有効化
         private fun buildLocationSettingsRequest() {
             val builder = LocationSettingsRequest.Builder()
-
             builder.addLocationRequest(locationRequest)
             locationSettingsRequest = builder.build()
         }
 
 
         private fun startLocationUpdates() {
-            // Begin by checking if the device has the necessary location settings.
+            //取得のための設定が存在しているかチェック
             settingsClient!!.checkLocationSettings(locationSettingsRequest)
                 .addOnSuccessListener(
                     MainActivity(),
@@ -125,31 +127,30 @@ class LocationManager(context: Context) {
                         Log.w(tag, "---:All location settings are satisfied.")
 
                         // パーミッションの確認
-                        if(ActivityCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
+                        if(ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                            !=PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                            !=PackageManager.PERMISSION_GRANTED) {
 
                             return@OnSuccessListener
                         }
+                        //ループして継続的にGPS情報を更新する
                         fusedLocationClient!!.requestLocationUpdates(
                             locationRequest, locationCallback, Looper.myLooper())
                     })
-
+            //GPSの起動に成功したフラグ
             requestingLocationUpdates = true
         }
 
+        //GPSを止める
         private fun stopLocationUpdates() {
-
             if (requestingLocationUpdates!!) {
                 return
             }
-
             fusedLocationClient!!.removeLocationUpdates(locationCallback)
         }
 
-
+        //locationに入っている値を返す（Null対策済み）
         fun getSensorData(): Location {
             if(location != null) {
                 Log.w(tag,"----:RETURN LOCATION")

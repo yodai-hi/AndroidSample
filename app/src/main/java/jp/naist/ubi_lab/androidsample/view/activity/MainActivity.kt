@@ -36,15 +36,17 @@ class MainActivity : Activity() {
     private var res = ""
     private var mRealm : Realm? = null
 
-
+    //Activityの起動の一番初めに呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //GPSのpermissionを確認
         if (!isLocationPermissionGranted()) {
             requestLocationPermission()
         }
 
+        //realmの初期化
         Realm.init(this)
         val realmConfig = RealmConfiguration.Builder()
             .deleteRealmIfMigrationNeeded()
@@ -52,29 +54,35 @@ class MainActivity : Activity() {
         mRealm = Realm.getInstance(realmConfig)
 
         locationManager.start()
+
+        //ボタンのクリックリスナー
         location_button.setOnClickListener {
+            //GPSを取得
             getGps()
         }
         api_button.setOnClickListener {
+            //天気を取得
             fetchWeather()
         }
         memo_button.setOnClickListener {
+            //HistoryActivityに遷移
             val intent = Intent(this@MainActivity, HistoryActivity::class.java)
             startActivity(intent)
         }
         save_button.setOnClickListener {
+            //MemoをRealmに保存
             saveMemo()
         }
     }
 
-
+    //Activityが破棄されるときに呼ばれる．すべてのインスタンスを初期化しないとメモリリークの原因に
     override fun onDestroy() {
         locationManager.stop()
         mRealm!!.close()
         super.onDestroy()
     }
 
-
+    //LocationManagerのインスタンスを利用してLocationDataに値を保存
     private fun getGps(){
         val locationData = locationManager.getSensorData()
         location_text_lat.text = String.format("%1$.4f", locationData.latitude)
@@ -87,8 +95,9 @@ class MainActivity : Activity() {
         locationLNG = locationData.longitude
     }
 
-
+    //非同期通信によりAPIをたたいて天気情報を取得
     private fun fetchWeather() {
+        //APIのエンドポイントを指定
         val baseURL = "http://api.openweathermap.org/data/2.5/forecast"
         val gpsOption = "?lat=$locationLAT&lon=$locationLNG"
         val modeOption = "&mode=json"
@@ -105,12 +114,15 @@ class MainActivity : Activity() {
 
         //結果を表示
         client.newCall(request).enqueue(object : Callback {
+            //通信に失敗した場合のコールバック（ソケットが閉じている場合）
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
 
+            //通信に成功した場合のコールバック
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
+                //JsonをパースしてWeatherDataクラスに格納
                 res = response.body()!!.string()
                 val weatherList = ArrayList<WeatherData>()
                 try {
@@ -129,10 +141,11 @@ class MainActivity : Activity() {
                         weatherList.add(weatherData)
                     }
 
-                    // UI反映
+                    //UI反映（非同期処理とは別のUIスレッド上で処理）
                     runOnUiThread {
                         drawWeather(weatherList)
                     }
+                    //Jsonのパースに失敗した場合，アプリが落ちないようにcatch
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -140,7 +153,7 @@ class MainActivity : Activity() {
         })
     }
 
-
+    //ListViewとAdapterを接続．AdapterにはreadMemo()で撮ってきたデータを挿入．
     private fun drawWeather(weathers : ArrayList<WeatherData>){
         Log.w(tag, weathers.toString())
         val listView = weather_list
@@ -151,11 +164,14 @@ class MainActivity : Activity() {
         weatherViewAdapter.setListViewHeightBasedOnChildren(listView)
     }
 
+    //realmにメモを保存
     private fun saveMemo(){
+        //ユニークkeyがかぶらないようにするため，自動インクリメント（Null対策済み）
         val idMax = mRealm!!.where(MemoData::class.java).max("id")
         val id: Long = if(idMax!=null) idMax.toLong()+1
         else 0L
 
+        //realmにデータを保存
         mRealm!!.executeTransaction {
             val memo = mRealm!!.createObject(MemoData::class.java, id)
             memo.title = memo_title_text.text.toString()
@@ -164,11 +180,13 @@ class MainActivity : Activity() {
             Log.e(tag,memo.toString())
             mRealm!!.copyToRealm(memo)
         }
+
+        //Box内のテキストを消去
         memo_title_text.text = null
         memo_main_text.text = null
     }
 
-
+    //permission未許可の時
     @SuppressLint("ObsoleteSdkInt")
     private fun isLocationPermissionGranted(): Boolean = when {
         Build.VERSION.SDK_INT < Build.VERSION_CODES.M -> true // permission 確認の必要なし
@@ -178,7 +196,7 @@ class MainActivity : Activity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-
+    //permission許可確認画面を表示
     private fun requestLocationPermission() =
         ActivityCompat.requestPermissions(
             this,

@@ -9,7 +9,9 @@ data class WeatherData(
     var clouds : Int?,
     var rain : Boolean?
 ) {
+    //インスタンスを生成した時のMemoDataの中身
     constructor(): this(null,null, null,null,null,null, null)
+    //これを呼び出すことで外部からインスタンスに値を渡せる
     fun set(time:String, temp_max: String, temp_min: String, humi: String, clouds: Int, rain: Boolean, id:Long){
         this.id = id
         this.time = time

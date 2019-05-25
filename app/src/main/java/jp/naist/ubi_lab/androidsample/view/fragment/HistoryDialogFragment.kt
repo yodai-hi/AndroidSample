@@ -25,9 +25,9 @@ class HistoryDialogFragment : DialogFragment() {
     private var adapter: MemoViewAdapter? = null
 
 
-
-    fun callFromOut(memo: MemoData, mode: Boolean, adapter: MemoViewAdapter) {
-        Log.d(mTAG, "callFromOut this method")
+    //外部から呼ばれたときにインスタンスを作製
+    fun historyDialogFragment(memo: MemoData, mode: Boolean, adapter: MemoViewAdapter) {
+        Log.d(mTAG, "historyDialogFragment is called")
         this.id = memo.id
         this.title = memo.title
         this.main = memo.main
@@ -37,7 +37,7 @@ class HistoryDialogFragment : DialogFragment() {
     }
 
 
-    // ダイアログが生成された時に呼ばれるメソッド ※必須
+    //ダイアログが生成された時に呼ばれるメソッド ※必須
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return if(mode){
             createViewDialog()
@@ -47,63 +47,67 @@ class HistoryDialogFragment : DialogFragment() {
         }
     }
 
+    //ViewモードのDialogを生成
     private fun createViewDialog() : Dialog{
-        // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化します
+        //ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化
         val dialogBuilder = AlertDialog.Builder(activity)
-        // タイトル設定
+        //タイトル設定
         dialogBuilder.setTitle(title)
-        // 表示する文章設定
+        //表示する文章設定
         dialogBuilder.setMessage(main)
 
-        // NGボタン作成
+        //Closeボタン作成
         dialogBuilder.setNegativeButton("Close") { _, _ ->
-            // 何もしないで閉じる
+            //何もしないで閉じる
         }
 
-        // dialogBulderを返す
+        //dialogBuilderを返す
         return dialogBuilder.create()
     }
 
+    //EditモードのDialogを生成
     private fun createEditDialog() : Dialog{
-
-        // テキスト入力用Viewの作成
+        //テキスト入力用Viewの作成
         val editTitleView = EditText(activity)
         editTitleView.setText(title)
+        //書き込める行を1行に制限
         editTitleView.setLines(1)
 
+        //テキスト入力用Viewの作成
         val editMainView = EditText(activity)
         editMainView.setText(main)
+        //書き込める行を最大7行に制限
         editMainView.setLines(7)
 
-        // ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化
+        //ダイアログ生成  AlertDialogのBuilderクラスを指定してインスタンス化
         val dialogBuilder = AlertDialog.Builder(activity)
-        // タイトル設定
+        //タイトル設定
         dialogBuilder.setCustomTitle(editTitleView)
-        // Viewをカスタマイズ
+        //表示する文章設定
         dialogBuilder.setView(editMainView)
-        // 表示する文章設定
-//        dialogBuilder.setMessage(main)
 
-        // OKボタン作成
+        //Saveボタン作成
         dialogBuilder.setPositiveButton("Save"){ _, _ ->
-            // トーストを出す
-            realmInit()
+            //トーストを出す
             Toast.makeText(activity, "Save edited memo", Toast.LENGTH_SHORT).show()
-            realmUpdate(id!!, editTitleView.text.toString(), editMainView.text.toString())
+            //realm DBに変更を反映
+            realmInit()
+            updateMemo(id!!, editTitleView.text.toString(), editMainView.text.toString())
             adapter!!.notifyDataSetChanged()
             adapter!!.memoList = readMemo()
             mRealm!!.close()
         }
 
-        // NGボタン作成
+        //Cancelボタン作成
         dialogBuilder.setNegativeButton("Cancel"){ _, _ ->
-            // 何もしないで閉じる
+            //何もしないで閉じる
         }
 
-        // dialogBulderを返す
+        //dialogBuilderを返す
         return dialogBuilder.create()
     }
 
+    //realmのインスタンス生成
     private fun realmInit(){
         Realm.init(context!!)
         val realmConfig = RealmConfiguration.Builder()
@@ -112,7 +116,8 @@ class HistoryDialogFragment : DialogFragment() {
         mRealm = Realm.getInstance(realmConfig)
     }
 
-    private fun realmUpdate(id:Long, title:String, main:String){
+    //realm DBの更新を行う関数
+    private fun updateMemo(id:Long, title:String, main:String){
         mRealm!!.executeTransaction {
             val memo = mRealm!!.where(MemoData::class.java).equalTo("id",id).findFirst()
             memo!!.title = title
@@ -121,6 +126,7 @@ class HistoryDialogFragment : DialogFragment() {
         }
     }
 
+    //realmからMemoDataのDBを呼び出す
     private fun readMemo() : ArrayList<MemoData> {
         val memoRealm = mRealm!!.where(MemoData::class.java).findAll()
         val memoList = ArrayList<MemoData>()
