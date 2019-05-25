@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.Model
+package jp.naist.ubi_lab.androidsample.model
 
 data class WeatherData(
     var id : Long?,

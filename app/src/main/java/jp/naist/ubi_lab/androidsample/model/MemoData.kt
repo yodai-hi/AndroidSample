@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.Model
+package jp.naist.ubi_lab.androidsample.model
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

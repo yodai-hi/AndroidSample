@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.View.Activity
+package jp.naist.ubi_lab.androidsample.view.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -10,18 +10,18 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.text.format.DateFormat
 import android.util.Log
-import jp.naist.ubi_lab.androidsample.Utils.LocationManager
-import jp.naist.ubi_lab.androidsample.ViewModel.WeatherViewAdapter
+import jp.naist.ubi_lab.androidsample.utils.LocationManager
+import jp.naist.ubi_lab.androidsample.viewmodel.WeatherViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import org.json.JSONException
 import org.json.JSONObject
 import okhttp3.*
-import jp.naist.ubi_lab.androidsample.Model.WeatherData
+import jp.naist.ubi_lab.androidsample.model.WeatherData
 import android.content.Intent
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import jp.naist.ubi_lab.androidsample.Model.MemoData
+import jp.naist.ubi_lab.androidsample.model.MemoData
 import jp.naist.ubi_lab.androidsample.R
 import kotlin.collections.ArrayList
 

@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.View.Fragment
+package jp.naist.ubi_lab.androidsample.view.fragment
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -10,8 +10,8 @@ import android.text.format.DateFormat
 import android.widget.EditText
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import jp.naist.ubi_lab.androidsample.Model.MemoData
-import jp.naist.ubi_lab.androidsample.ViewModel.MemoViewAdapter
+import jp.naist.ubi_lab.androidsample.model.MemoData
+import jp.naist.ubi_lab.androidsample.viewmodel.MemoViewAdapter
 
 
 class HistoryDialogFragment : DialogFragment() {

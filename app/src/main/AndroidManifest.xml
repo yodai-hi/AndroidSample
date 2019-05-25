@@ -8,14 +8,15 @@
 
     <application
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/android_sample_icon"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name="jp.naist.ubi_lab.androidsample.View.Activity.HistoryActivity">
+            android:theme="@style/AppTheme"
+            android:icon="@mipmap/android_sample_icon">
+        <activity android:name="jp.naist.ubi_lab.androidsample.view.activity.HistoryActivity"
+        android:parentActivityName=".view.activity.MainActivity">
         </activity>
-        <activity android:name="jp.naist.ubi_lab.androidsample.View.Activity.MainActivity">
+        <activity android:name="jp.naist.ubi_lab.androidsample.view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

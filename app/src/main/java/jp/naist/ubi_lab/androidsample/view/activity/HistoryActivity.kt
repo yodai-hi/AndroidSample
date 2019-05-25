@@ -1,13 +1,13 @@
-package jp.naist.ubi_lab.androidsample.View.Activity
+package jp.naist.ubi_lab.androidsample.view.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import jp.naist.ubi_lab.androidsample.View.Fragment.HistoryDialogFragment
-import jp.naist.ubi_lab.androidsample.Model.MemoData
+import jp.naist.ubi_lab.androidsample.view.fragment.HistoryDialogFragment
+import jp.naist.ubi_lab.androidsample.model.MemoData
 import jp.naist.ubi_lab.androidsample.R
-import jp.naist.ubi_lab.androidsample.ViewModel.MemoViewAdapter
+import jp.naist.ubi_lab.androidsample.viewmodel.MemoViewAdapter
 import kotlinx.android.synthetic.main.activity_history.*
 import android.widget.AdapterView
 
@@ -30,6 +30,11 @@ class HistoryActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         drawMemo()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onDestroy() {

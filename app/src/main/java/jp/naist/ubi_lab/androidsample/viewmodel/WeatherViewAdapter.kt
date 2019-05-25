@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.ViewModel
+package jp.naist.ubi_lab.androidsample.viewmodel
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import android.widget.BaseAdapter
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.ListView
-import jp.naist.ubi_lab.androidsample.Model.WeatherData
+import jp.naist.ubi_lab.androidsample.model.WeatherData
 import android.widget.TextView
 import jp.naist.ubi_lab.androidsample.R
 

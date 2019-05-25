@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.ViewModel
+package jp.naist.ubi_lab.androidsample.viewmodel
 
 import android.content.Context
 import android.util.Log
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.Toast.LENGTH_SHORT
-import jp.naist.ubi_lab.androidsample.Model.MemoData
+import jp.naist.ubi_lab.androidsample.model.MemoData
 import jp.naist.ubi_lab.androidsample.R
 import io.realm.Realm
 import io.realm.RealmConfiguration

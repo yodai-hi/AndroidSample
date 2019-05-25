@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.Utils
+package jp.naist.ubi_lab.androidsample.utils
 
 import android.Manifest
 import android.content.Context
@@ -16,7 +16,7 @@ import android.os.Looper
 import android.support.v4.app.ActivityCompat
 import com.google.android.gms.location.LocationSettingsResponse
 import com.google.android.gms.tasks.OnSuccessListener
-import jp.naist.ubi_lab.androidsample.View.Activity.MainActivity
+import jp.naist.ubi_lab.androidsample.view.activity.MainActivity
 
 
 class LocationManager(context: Context) {
