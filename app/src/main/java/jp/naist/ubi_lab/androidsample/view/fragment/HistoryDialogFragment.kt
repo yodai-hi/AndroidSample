@@ -11,7 +11,7 @@ import android.widget.EditText
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import jp.naist.ubi_lab.androidsample.model.MemoData
-import jp.naist.ubi_lab.androidsample.viewmodel.MemoViewAdapter
+import jp.naist.ubi_lab.androidsample.view.adapter.MemoViewAdapter
 
 
 class HistoryDialogFragment : DialogFragment() {

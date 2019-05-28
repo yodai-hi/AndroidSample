@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import jp.naist.ubi_lab.androidsample.R
 import jp.naist.ubi_lab.androidsample.repository.SensorManager
-import jp.naist.ubi_lab.androidsample.viewmodel.SensorViewAdapter
+import jp.naist.ubi_lab.androidsample.view.adapter.SensorViewAdapter
 import kotlinx.android.synthetic.main.fragment_sensor.*
 import io.realm.Realm
 import io.realm.RealmConfiguration

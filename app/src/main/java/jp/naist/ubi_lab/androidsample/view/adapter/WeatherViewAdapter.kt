@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.viewmodel
+package jp.naist.ubi_lab.androidsample.view.adapter
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
