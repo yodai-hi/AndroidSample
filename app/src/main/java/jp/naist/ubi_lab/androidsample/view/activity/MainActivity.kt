@@ -10,8 +10,8 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.text.format.DateFormat
 import android.util.Log
-import jp.naist.ubi_lab.androidsample.utils.LocationManager
-import jp.naist.ubi_lab.androidsample.viewmodel.WeatherViewAdapter
+import jp.naist.ubi_lab.androidsample.repository.LocationManager
+import jp.naist.ubi_lab.androidsample.view.adapter.WeatherViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import org.json.JSONException
@@ -30,7 +30,8 @@ class MainActivity : Activity() {
 
     private val tag = "MainActivity"
     private val REQUEST_PERMISSION_COARSE_LOCATION = 101
-    private var locationManager: LocationManager = LocationManager(this)
+    private var locationManager: LocationManager =
+        LocationManager(this)
     private var locationLAT = 0.0
     private var locationLNG = 0.0
     private var res = ""

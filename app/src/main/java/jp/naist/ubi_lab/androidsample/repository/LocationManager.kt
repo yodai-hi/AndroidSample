@@ -1,4 +1,4 @@
-package jp.naist.ubi_lab.androidsample.utils
+package jp.naist.ubi_lab.androidsample.repository
 
 import android.Manifest
 import android.content.Context
@@ -23,7 +23,8 @@ class LocationManager(context: Context) {
     //デバッグ用のタグ
     private val tag = "LocationManager"
     //インスタンスを作製
-    private var locationEventListener: GpsLocationEventListener = GpsLocationEventListener(context)
+    private var locationEventListener: GpsLocationEventListener =
+        GpsLocationEventListener(context)
 
 
     fun start() {

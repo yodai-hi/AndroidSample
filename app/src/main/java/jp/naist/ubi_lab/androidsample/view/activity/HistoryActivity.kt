@@ -7,7 +7,7 @@ import io.realm.RealmConfiguration
 import jp.naist.ubi_lab.androidsample.view.fragment.HistoryDialogFragment
 import jp.naist.ubi_lab.androidsample.model.MemoData
 import jp.naist.ubi_lab.androidsample.R
-import jp.naist.ubi_lab.androidsample.viewmodel.MemoViewAdapter
+import jp.naist.ubi_lab.androidsample.view.adapter.MemoViewAdapter
 import kotlinx.android.synthetic.main.activity_history.*
 import android.widget.AdapterView
 
